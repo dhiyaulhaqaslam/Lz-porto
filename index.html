@@ -80,9 +80,36 @@
                     <li>🚀 Goal: Build useful products people love using</li>
                   </ul>
 
-                  <section class="skills-showcase" aria-label="Tech stack">
-                    <h2>Tech Stack</h2>
-                    <div class="skills-grid">
+                  <div class="about-tabs" role="tablist" aria-label="About menu tabs">
+                    <button
+                      class="about-tab-btn active"
+                      type="button"
+                      role="tab"
+                      aria-selected="true"
+                      data-about-tab="tools"
+                    >
+                      Tools
+                    </button>
+                    <button
+                      class="about-tab-btn"
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      data-about-tab="certificate"
+                    >
+                      Certificate
+                    </button>
+                  </div>
+
+                  <section
+                    class="about-tab-content active"
+                    id="aboutTools"
+                    data-about-content="tools"
+                    aria-label="Tools content"
+                  >
+                    <section class="skills-showcase" aria-label="Tech stack">
+                      <h2>Tech Stack</h2>
+                      <div class="skills-grid">
                       <article class="skill-card">
                         <span class="skill-logo laravel">L</span>
                         <div>
@@ -170,7 +197,102 @@
                           <p>Code Language</p>
                         </div>
                       </article>
-                    </div>
+                      </div>
+                    </section>
+                  </section>
+
+                  <section
+                    class="about-tab-content"
+                    id="aboutCertificate"
+                    data-about-content="certificate"
+                    aria-label="Certificate content"
+                  >
+                    <section class="certificate-showcase" aria-label="Certificate list">
+                      <h2>Certificates</h2>
+                      <div class="certificate-grid">
+                        <article class="certificate-card">
+                          <img
+                            src="assets/certificate/dicoding1.png"
+                            alt="Belajar Prinsip Pemrograman SOLID certificate"
+                            loading="lazy"
+                          />
+                          <h3>Belajar Prinsip Pemrograman SOLID</h3>
+                          <p>Dicoding</p>
+                        </article>
+                        <article class="certificate-card">
+                          <img
+                            src="assets/certificate/dicoding2.png"
+                            alt="Belajar Dasar Pemrograman Web certificate"
+                            loading="lazy"
+                          />
+                          <h3>Belajar Dasar Pemrograman Web</h3>
+                          <p>Dicoding</p>
+                        </article>
+                        <article class="certificate-card">
+                          <img
+                            src="assets/certificate/SL1.png"
+                            alt="Getting Started with Full Stack Java Development certificate"
+                            loading="lazy"
+                          />
+                          <h3>Getting Started with Full Stack Java Development</h3>
+                          <p>SimpliLearn</p>
+                        </article>
+                        <article class="certificate-card">
+                          <img
+                            src="assets/certificate/SL2.png"
+                            alt="Full-Stack Development 101 certificate"
+                            loading="lazy"
+                          />
+                          <h3>Full-Stack Development 101</h3>
+                          <p>SimpliLearn</p>
+                        </article>
+                        <article class="certificate-card">
+                          <img
+                            src="assets/certificate/skillshop1.png"
+                            alt="Dive Deeper into GA4 Data and Reports certificate"
+                            loading="lazy"
+                          />
+                          <h3>Dive Deeper into GA4 Data and Reports</h3>
+                          <p>Google Skillshop</p>
+                        </article>
+                        <article class="certificate-card">
+                          <img
+                            src="assets/certificate/skillshop2.png"
+                            alt="Make Impactful Creatives with Google Web Designer certificate"
+                            loading="lazy"
+                          />
+                          <h3>Make Impactful Creatives with Google Web Designer</h3>
+                          <p>Google Skillshop</p>
+                        </article>
+                        <article class="certificate-card">
+                          <img
+                            src="assets/certificate/semrush1.png"
+                            alt="International SEO certificate"
+                            loading="lazy"
+                          />
+                          <h3>International SEO</h3>
+                          <p>Semrush</p>
+                        </article>
+                        <article class="certificate-card">
+                          <img
+                            src="assets/certificate/Artificial%20Intelligence.png"
+                            alt="Artificial Intelligence certificate"
+                            loading="lazy"
+                          />
+                          <h3>Artificial Intelligence</h3>
+                          <p>Bisa AI</p>
+                        </article>
+                        <article class="certificate-card">
+                          <img
+                            src="assets/certificate/FL1.png"
+                            alt="Fundamental Skills in Engineering Design certificate"
+                            loading="lazy"
+                          />
+                          <h3>Fundamental Skills in Engineering Design</h3>
+                          <p>Future Learn</p>
+                        </article>
+                      </div>
+                    </section>
                   </section>
                 </article>
 

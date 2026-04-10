@@ -8,9 +8,24 @@ const backToDesktopBtn = document.getElementById("backToDesktopBtn");
 const panels = Array.from(document.querySelectorAll(".panel"));
 const clock = document.getElementById("clock");
 const sectionTitle = document.getElementById("sectionTitle");
+const aboutTabButtons = Array.from(document.querySelectorAll(".about-tab-btn"));
+const aboutTabContents = Array.from(document.querySelectorAll(".about-tab-content"));
 
 const OPEN_ANIMATION_MS = 740;
 const CLOSE_ANIMATION_MS = 560;
+
+function setAboutTab(tabName = "tools") {
+  aboutTabButtons.forEach((button) => {
+    const isActive = button.dataset.aboutTab === tabName;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+
+  aboutTabContents.forEach((content) => {
+    const isActive = content.dataset.aboutContent === tabName;
+    content.classList.toggle("active", isActive);
+  });
+}
 
 function updateClock() {
   const now = new Date();
@@ -24,6 +39,10 @@ function setPanel(targetId) {
   panels.forEach((panel) => {
     panel.classList.toggle("active", panel.id === targetId);
   });
+
+  if (targetId === "about") {
+    setAboutTab("tools");
+  }
 
   if (sectionTitle) {
     const folderLabel =
@@ -67,6 +86,10 @@ desktopFolderButtons.forEach((button) => {
 
 backToDesktopBtn.addEventListener("click", closeFolder);
 
+aboutTabButtons.forEach((button) => {
+  button.addEventListener("click", () => setAboutTab(button.dataset.aboutTab));
+});
+
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeFolder();
@@ -76,3 +99,4 @@ window.addEventListener("keydown", (event) => {
 updateClock();
 setInterval(updateClock, 1000 * 30);
 setPanel("about");
+setAboutTab("tools");

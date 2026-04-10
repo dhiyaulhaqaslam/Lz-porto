@@ -275,8 +275,52 @@ body {
    line-height: 1.55;
 }
 
+.about-tabs {
+   margin-top: 1rem;
+   margin-bottom: 1rem;
+   width: fit-content;
+   max-width: 100%;
+   display: inline-flex;
+   gap: 0.45rem;
+   border-radius: 999px;
+   background: rgba(8, 13, 24, 0.82);
+   border: 1px solid rgba(255, 255, 255, 0.12);
+   padding: 0.24rem;
+}
+
+.about-tab-btn {
+   border: 0;
+   background: transparent;
+   color: #aeb4c6;
+   padding: 0.52rem 1rem;
+   font-size: 0.96rem;
+   border-radius: 999px;
+   cursor: pointer;
+   font-weight: 600;
+   transition: all 0.2s ease;
+}
+
+.about-tab-btn:hover,
+.about-tab-btn:focus-visible {
+   color: #eaf1ff;
+}
+
+.about-tab-btn.active {
+   background: rgba(255, 255, 255, 0.08);
+   color: #f8fbff;
+   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.85);
+}
+
+.about-tab-content {
+   display: none;
+}
+
+.about-tab-content.active {
+   display: block;
+}
+
 .skills-showcase {
-   margin-top: 1.3rem;
+   margin-top: 0.2rem;
 }
 
 .skills-showcase h2 {
@@ -376,6 +420,57 @@ body {
 .skill-logo.typescript {
    background: #3f91ff;
    color: #052039;
+}
+
+.certificate-showcase {
+   margin-top: 0.2rem;
+}
+
+.certificate-showcase h2 {
+   margin: 0 0 0.85rem;
+   font-size: 1.05rem;
+   color: #ecf2ff;
+}
+
+.certificate-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+   gap: 0.75rem;
+}
+
+.certificate-card {
+   background: linear-gradient(135deg, rgba(14, 27, 50, 0.96), rgba(21, 34, 58, 0.95));
+   border: 1px solid rgba(255, 255, 255, 0.08);
+   border-radius: 0.9rem;
+   padding: 0.85rem 0.9rem;
+    min-height: 240px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+
+.certificate-card img {
+   width: 100%;
+   height: 130px;
+   object-fit: cover;
+   object-position: center;
+   border-radius: 0.6rem;
+   border: 1px solid rgba(255, 255, 255, 0.12);
+   margin-bottom: 0.7rem;
+   background: rgba(255, 255, 255, 0.03);
+}
+
+.certificate-card h3 {
+   margin: 0;
+   color: #f1f5ff;
+   font-size: 0.98rem;
+   line-height: 1.35;
+}
+
+.certificate-card p {
+   margin: 0.65rem 0 0;
+   color: #8f9bbb;
+   font-size: 0.9rem;
 }
 
 .project-grid {
@@ -510,6 +605,10 @@ a:hover {
    }
 
    .skills-grid {
+      grid-template-columns: 1fr;
+   }
+
+   .certificate-grid {
       grid-template-columns: 1fr;
    }
 }
