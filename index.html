@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laptop Portfolio</title>
+    <meta
+      name="description"
+      content="A laptop-style portfolio with an animated folder experience."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="scene" aria-live="polite">
+      <section class="laptop" aria-label="Portfolio laptop interface">
+        <div class="lid"></div>
+
+        <div class="screen-wrap">
+          <div class="camera-dot"></div>
+
+          <div class="screen" id="screen">
+            <div class="desktop" id="desktopView">
+              <header class="desktop-topbar">
+                <p>My Portfolio OS</p>
+                <p id="clock" aria-label="Current time"></p>
+              </header>
+
+              <button
+                class="folder-btn"
+                id="openFolderBtn"
+                aria-label="Open portfolio folder"
+              >
+                <span class="folder-icon" aria-hidden="true"></span>
+                <span class="folder-label">Portfolio</span>
+              </button>
+
+              <p class="desktop-hint">Tap the folder to enter</p>
+            </div>
+
+            <div class="workspace" id="workspaceView" aria-hidden="true">
+              <aside class="sidebar" aria-label="Portfolio sections">
+                <div class="folder-title-wrap">
+                  <span class="folder-mini" aria-hidden="true"></span>
+                  <p>Portfolio Folder</p>
+                </div>
+
+                <button class="menu-btn active" data-target="about">About</button>
+                <button class="menu-btn" data-target="projects">Projects</button>
+                <button class="menu-btn" data-target="contact">Contact</button>
+
+                <button class="back-btn" id="backToDesktopBtn">⬅ Back to desktop</button>
+              </aside>
+
+              <section class="content-area">
+                <article class="panel active" id="about">
+                  <h1>About Me</h1>
+                  <p>
+                    Hi, I’m <strong>Your Name</strong> — a creator who enjoys building delightful,
+                    user-focused digital products.
+                  </p>
+                  <p>
+                    I work across design and development, turning ideas into polished experiences
+                    with clean UI, thoughtful interaction, and fast performance.
+                  </p>
+                  <ul>
+                    <li>💻 Focus: Frontend Development</li>
+                    <li>🎨 Style: Modern, minimal, and interactive</li>
+                    <li>🚀 Goal: Build useful products people love using</li>
+                  </ul>
+                </article>
+
+                <article class="panel" id="projects">
+                  <h1>Projects</h1>
+                  <div class="project-grid">
+                    <article class="project-card">
+                      <h2>Project One</h2>
+                      <p>A responsive web app with sleek UI and dashboard interactions.</p>
+                      <span>HTML • CSS • JavaScript</span>
+                    </article>
+
+                    <article class="project-card">
+                      <h2>Project Two</h2>
+                      <p>A portfolio redesign focused on storytelling and animation flow.</p>
+                      <span>Figma • React • Framer Motion</span>
+                    </article>
+
+                    <article class="project-card">
+                      <h2>Project Three</h2>
+                      <p>An internal productivity tool to track tasks and sprint progress.</p>
+                      <span>TypeScript • Node.js • PostgreSQL</span>
+                    </article>
+                  </div>
+                </article>
+
+                <article class="panel" id="contact">
+                  <h1>Contact</h1>
+                  <p>Let’s collaborate and build something amazing.</p>
+                  <ul class="contact-list">
+                    <li>Email: <a href="mailto:you@example.com">you@example.com</a></li>
+                    <li>LinkedIn: <a href="#">linkedin.com/in/yourname</a></li>
+                    <li>GitHub: <a href="#">github.com/yourname</a></li>
+                  </ul>
+                </article>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="base"></div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
