@@ -10,9 +10,66 @@ const clock = document.getElementById("clock");
 const sectionTitle = document.getElementById("sectionTitle");
 const aboutTabButtons = Array.from(document.querySelectorAll(".about-tab-btn"));
 const aboutTabContents = Array.from(document.querySelectorAll(".about-tab-content"));
+const projectFolderView = document.getElementById("projectFolderView");
+const projectDetailView = document.getElementById("projectDetailView");
+const projectFolderButtons = Array.from(
+  document.querySelectorAll(".project-folder-btn")
+);
+const projectDetailCards = Array.from(
+  document.querySelectorAll(".project-card-detail")
+);
+const backToProjectFoldersBtn = document.getElementById("backToProjectFoldersBtn");
+const projectImages = Array.from(document.querySelectorAll(".project-image"));
 
 const OPEN_ANIMATION_MS = 740;
 const CLOSE_ANIMATION_MS = 560;
+
+function initializeProjectImageFallback() {
+  projectImages.forEach((image) => {
+    const fallbackSrc = image.dataset.fallbackSrc || "assets/porto.png";
+
+    image.addEventListener("error", () => {
+      if (image.src.includes(fallbackSrc)) return;
+      image.src = fallbackSrc;
+    });
+
+    if (!image.getAttribute("src")) {
+      image.src = fallbackSrc;
+    }
+  });
+}
+
+function resetProjectExplorer() {
+  if (!projectFolderView || !projectDetailView) return;
+
+  projectFolderView.classList.add("active");
+  projectDetailView.classList.remove("active");
+  projectDetailView.setAttribute("aria-hidden", "true");
+
+  projectFolderButtons.forEach((button) => {
+    button.classList.remove("active");
+  });
+
+  projectDetailCards.forEach((card) => {
+    card.classList.remove("active");
+  });
+}
+
+function openProjectDetail(projectId) {
+  if (!projectFolderView || !projectDetailView) return;
+
+  projectFolderView.classList.remove("active");
+  projectDetailView.classList.add("active");
+  projectDetailView.setAttribute("aria-hidden", "false");
+
+  projectFolderButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.projectId === projectId);
+  });
+
+  projectDetailCards.forEach((card) => {
+    card.classList.toggle("active", card.dataset.projectId === projectId);
+  });
+}
 
 function setAboutTab(tabName = "tools") {
   aboutTabButtons.forEach((button) => {
@@ -42,6 +99,10 @@ function setPanel(targetId) {
 
   if (targetId === "about") {
     setAboutTab("tools");
+  }
+
+  if (targetId === "projects") {
+    resetProjectExplorer();
   }
 
   if (sectionTitle) {
@@ -90,6 +151,14 @@ aboutTabButtons.forEach((button) => {
   button.addEventListener("click", () => setAboutTab(button.dataset.aboutTab));
 });
 
+projectFolderButtons.forEach((button) => {
+  button.addEventListener("click", () => openProjectDetail(button.dataset.projectId));
+});
+
+if (backToProjectFoldersBtn) {
+  backToProjectFoldersBtn.addEventListener("click", resetProjectExplorer);
+}
+
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeFolder();
@@ -100,3 +169,5 @@ updateClock();
 setInterval(updateClock, 1000 * 30);
 setPanel("about");
 setAboutTab("tools");
+resetProjectExplorer();
+initializeProjectImageFallback();

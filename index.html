@@ -298,89 +298,102 @@
 
                 <article class="panel" id="projects">
                   <h1>Projects</h1>
-                  <div class="project-grid">
-                    <article class="project-card">
-                      <img src="assets/project-dkp.png" alt="Dinas Ketahanan Pangan project cover" loading="lazy" />
-                      <h2>Dinas Ketahanan Pangan</h2>
-                      <p>Website instansi dengan fitur artikel, longwis, projects, profil, dan dashboard admin.</p>
-                      <div class="project-tags">
-                        <span>Laravel</span>
-                        <span>Tailwind</span>
-                        <span>MySQL</span>
+                  <div class="project-explorer" id="projectExplorer">
+                    <section class="project-folder-view active" id="projectFolderView">
+                      <p class="project-hint">Open a project folder to view details.</p>
+                      <div class="project-folder-grid" role="list" aria-label="Project folders">
+                        <button class="project-folder-btn" type="button" data-project-id="dkp">
+                          <span class="project-folder-icon" aria-hidden="true"></span>
+                          <span>Dinas Ketahanan Pangan</span>
+                        </button>
+                        <button class="project-folder-btn" type="button" data-project-id="cvbuilder">
+                          <span class="project-folder-icon" aria-hidden="true"></span>
+                          <span>CV-Builder</span>
+                        </button>
+                        <button class="project-folder-btn" type="button" data-project-id="portfolio">
+                          <span class="project-folder-icon" aria-hidden="true"></span>
+                          <span>My Portfolio</span>
+                        </button>
+                        <button class="project-folder-btn" type="button" data-project-id="legacy">
+                          <span class="project-folder-icon" aria-hidden="true"></span>
+                          <span>Legacy</span>
+                        </button>
+                        <button class="project-folder-btn" type="button" data-project-id="zimagine">
+                          <span class="project-folder-icon" aria-hidden="true"></span>
+                          <span>Zimagine</span>
+                        </button>
+                        <button class="project-folder-btn" type="button" data-project-id="zcramble">
+                          <span class="project-folder-icon" aria-hidden="true"></span>
+                          <span>Zcramble</span>
+                        </button>
+                        <button class="project-folder-btn" type="button" data-project-id="guezz">
+                          <span class="project-folder-icon" aria-hidden="true"></span>
+                          <span>Guezz</span>
+                        </button>
                       </div>
-                      <a class="project-link" href="https://dkpmakassar.com/welcome" target="_blank" rel="noreferrer">Visit project</a>
-                    </article>
+                    </section>
 
-                    <article class="project-card">
-                      <img src="assets/cv-builder.png" alt="CV-Builder project cover" loading="lazy" />
-                      <h2>CV-Builder</h2>
-                      <p>Generator CV otomatis dengan template, badge, export PDF, dan penyimpanan data pengguna.</p>
-                      <div class="project-tags">
-                        <span>Next.js</span>
-                        <span>Tailwind</span>
-                        <span>MongoDB</span>
-                      </div>
-                      <a class="project-link" href="https://cv-builder-two-zeta.vercel.app/" target="_blank" rel="noreferrer">Visit project</a>
-                    </article>
+                    <section class="project-detail-view" id="projectDetailView" aria-hidden="true">
+                      <button class="project-back-btn" id="backToProjectFoldersBtn" type="button">
+                        ⬅ Back to project folders
+                      </button>
 
-                    <article class="project-card">
-                      <img src="assets/porto.png" alt="My Portfolio project cover" loading="lazy" />
-                      <h2>My Portfolio</h2>
-                      <p>Website personal branding untuk menampilkan profil, pengalaman, tools, dan proyek pengembangan.</p>
-                      <div class="project-tags">
-                        <span>React</span>
-                        <span>Tailwind</span>
-                        <span>Framer Motion</span>
-                      </div>
-                      <a class="project-link" href="#" aria-disabled="true">In progress</a>
-                    </article>
+                      <article class="project-card-detail" data-project-id="dkp">
+                        <img class="project-image" src="assets/project-dkp.png" alt="Dinas Ketahanan Pangan project cover" loading="lazy" data-fallback-src="assets/porto.png" />
+                        <h2>Dinas Ketahanan Pangan</h2>
+                        <p>Website instansi dengan fitur artikel, longwis, projects, profil, dan dashboard admin.</p>
+                        <div class="project-tags"><span>Laravel</span><span>Tailwind</span><span>MySQL</span></div>
+                        <a class="project-link" href="https://dkpmakassar.com/welcome" target="_blank" rel="noreferrer">Visit project</a>
+                      </article>
 
-                    <article class="project-card">
-                      <img src="assets/Legacy.png" alt="Legacy project cover" loading="lazy" />
-                      <h2>Legacy</h2>
-                      <p>Platform layanan pembuatan website dengan fitur service management dan order management.</p>
-                      <div class="project-tags">
-                        <span>Laravel</span>
-                        <span>React</span>
-                        <span>Tailwind</span>
-                      </div>
-                      <a class="project-link" href="#" aria-disabled="true">In progress</a>
-                    </article>
+                      <article class="project-card-detail" data-project-id="cvbuilder">
+                        <img class="project-image" src="assets/cv-builder.png" alt="CV-Builder project cover" loading="lazy" data-fallback-src="assets/porto.png" />
+                        <h2>CV-Builder</h2>
+                        <p>Generator CV otomatis dengan template, badge, export PDF, dan penyimpanan data pengguna.</p>
+                        <div class="project-tags"><span>Next.js</span><span>Tailwind</span><span>MongoDB</span></div>
+                        <a class="project-link" href="https://cv-builder-two-zeta.vercel.app/" target="_blank" rel="noreferrer">Visit project</a>
+                      </article>
 
-                    <article class="project-card">
-                      <img src="assets/zimagine.png" alt="Zimagine project cover" loading="lazy" />
-                      <h2>Zimagine</h2>
-                      <p>Web game interaktif dengan mode classic dan custom untuk menyusun serta menilai item pilihan.</p>
-                      <div class="project-tags">
-                        <span>React</span>
-                        <span>Tailwind</span>
-                        <span>Framer Motion</span>
-                      </div>
-                      <a class="project-link" href="https://zimagine.vercel.app/" target="_blank" rel="noreferrer">Visit project</a>
-                    </article>
+                      <article class="project-card-detail" data-project-id="portfolio">
+                        <img class="project-image" src="assets/porto.png" alt="My Portfolio project cover" loading="lazy" data-fallback-src="assets/porto.png" />
+                        <h2>My Portfolio</h2>
+                        <p>Website personal branding untuk menampilkan profil, pengalaman, tools, dan proyek pengembangan.</p>
+                        <div class="project-tags"><span>React</span><span>Tailwind</span><span>Framer Motion</span></div>
+                        <a class="project-link" href="#" aria-disabled="true">In progress</a>
+                      </article>
 
-                    <article class="project-card">
-                      <img src="assets/zcramble.png" alt="Zcramble project cover" loading="lazy" />
-                      <h2>Zcramble</h2>
-                      <p>Game kata acak dengan mode solo dan ranked untuk tantangan kompetitif antar player.</p>
-                      <div class="project-tags">
-                        <span>React</span>
-                        <span>Tailwind</span>
-                        <span>MongoDB</span>
-                      </div>
-                      <a class="project-link" href="https://zcramble.vercel.app/" target="_blank" rel="noreferrer">Visit project</a>
-                    </article>
+                      <article class="project-card-detail" data-project-id="legacy">
+                        <img class="project-image" src="assets/Legacy.png" alt="Legacy project cover" loading="lazy" data-fallback-src="assets/porto.png" />
+                        <h2>Legacy</h2>
+                        <p>Platform layanan pembuatan website dengan fitur service management dan order management.</p>
+                        <div class="project-tags"><span>Laravel</span><span>React</span><span>Tailwind</span></div>
+                        <a class="project-link" href="#" aria-disabled="true">In progress</a>
+                      </article>
 
-                    <article class="project-card">
-                      <img src="assets/project-dkp2.png" alt="Guezz project cover" loading="lazy" />
-                      <h2>Guezz</h2>
-                      <p>Mini web game tebak kata berbasis browser dengan gameplay cepat dan ringan.</p>
-                      <div class="project-tags">
-                        <span>JavaScript</span>
-                        <span>CSS</span>
-                      </div>
-                      <a class="project-link" href="https://guezz.vercel.app/" target="_blank" rel="noreferrer">Visit project</a>
-                    </article>
+                      <article class="project-card-detail" data-project-id="zimagine">
+                        <img class="project-image" src="assets/zimagine.png" alt="Zimagine project cover" loading="lazy" data-fallback-src="assets/porto.png" />
+                        <h2>Zimagine</h2>
+                        <p>Web game interaktif dengan mode classic dan custom untuk menyusun serta menilai item pilihan.</p>
+                        <div class="project-tags"><span>React</span><span>Tailwind</span><span>Framer Motion</span></div>
+                        <a class="project-link" href="https://zimagine.vercel.app/" target="_blank" rel="noreferrer">Visit project</a>
+                      </article>
+
+                      <article class="project-card-detail" data-project-id="zcramble">
+                        <img class="project-image" src="assets/zcramble.png" alt="Zcramble project cover" loading="lazy" data-fallback-src="assets/porto.png" />
+                        <h2>Zcramble</h2>
+                        <p>Game kata acak dengan mode solo dan ranked untuk tantangan kompetitif antar player.</p>
+                        <div class="project-tags"><span>React</span><span>Tailwind</span><span>MongoDB</span></div>
+                        <a class="project-link" href="https://zcramble.vercel.app/" target="_blank" rel="noreferrer">Visit project</a>
+                      </article>
+
+                      <article class="project-card-detail" data-project-id="guezz">
+                        <img class="project-image" src="assets/guezz.png" alt="Guezz project cover" loading="lazy" data-fallback-src="assets/porto.png" />
+                        <h2>Guezz</h2>
+                        <p>Mini web game tebak kata berbasis browser dengan gameplay cepat dan ringan.</p>
+                        <div class="project-tags"><span>JavaScript</span><span>CSS</span></div>
+                        <a class="project-link" href="https://guezz.vercel.app/" target="_blank" rel="noreferrer">Visit project</a>
+                      </article>
+                    </section>
                   </div>
                 </article>
 
