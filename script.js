@@ -1,11 +1,13 @@
 const screen = document.getElementById("screen");
 const desktopView = document.getElementById("desktopView");
 const workspaceView = document.getElementById("workspaceView");
-const openFolderBtn = document.getElementById("openFolderBtn");
+const desktopFolderButtons = Array.from(
+  document.querySelectorAll(".desktop-folder-btn")
+);
 const backToDesktopBtn = document.getElementById("backToDesktopBtn");
-const menuButtons = Array.from(document.querySelectorAll(".menu-btn"));
 const panels = Array.from(document.querySelectorAll(".panel"));
 const clock = document.getElementById("clock");
+const sectionTitle = document.getElementById("sectionTitle");
 
 const OPEN_ANIMATION_MS = 740;
 const CLOSE_ANIMATION_MS = 560;
@@ -19,19 +21,21 @@ function updateClock() {
 }
 
 function setPanel(targetId) {
-  menuButtons.forEach((button) => {
-    const isActive = button.dataset.target === targetId;
-    button.classList.toggle("active", isActive);
-    button.setAttribute("aria-selected", isActive ? "true" : "false");
-  });
-
   panels.forEach((panel) => {
     panel.classList.toggle("active", panel.id === targetId);
   });
+
+  if (sectionTitle) {
+    const folderLabel =
+      targetId.charAt(0).toUpperCase() + targetId.slice(1).toLowerCase();
+    sectionTitle.textContent = `${folderLabel} Folder`;
+  }
 }
 
-function openFolder() {
+function openFolder(targetId) {
   if (workspaceView.classList.contains("active")) return;
+
+  setPanel(targetId);
 
   screen.classList.remove("returning");
   screen.classList.add("opening");
@@ -57,12 +61,11 @@ function closeFolder() {
   }, CLOSE_ANIMATION_MS);
 }
 
-openFolderBtn.addEventListener("click", openFolder);
-backToDesktopBtn.addEventListener("click", closeFolder);
-
-menuButtons.forEach((button) => {
-  button.addEventListener("click", () => setPanel(button.dataset.target));
+desktopFolderButtons.forEach((button) => {
+  button.addEventListener("click", () => openFolder(button.dataset.target));
 });
+
+backToDesktopBtn.addEventListener("click", closeFolder);
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {

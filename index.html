@@ -25,34 +25,46 @@
                 <p id="clock" aria-label="Current time"></p>
               </header>
 
-              <button
-                class="folder-btn"
-                id="openFolderBtn"
-                aria-label="Open portfolio folder"
-              >
-                <span class="folder-icon" aria-hidden="true"></span>
-                <span class="folder-label">Portfolio</span>
-              </button>
+              <div class="desktop-folders" role="list" aria-label="Portfolio sections">
+                <button
+                  class="folder-btn desktop-folder-btn"
+                  data-target="about"
+                  aria-label="Open about folder"
+                >
+                  <span class="folder-icon" aria-hidden="true"></span>
+                  <span class="folder-label">About</span>
+                </button>
 
-              <p class="desktop-hint">Tap the folder to enter</p>
+                <button
+                  class="folder-btn desktop-folder-btn"
+                  data-target="projects"
+                  aria-label="Open projects folder"
+                >
+                  <span class="folder-icon" aria-hidden="true"></span>
+                  <span class="folder-label">Projects</span>
+                </button>
+
+                <button
+                  class="folder-btn desktop-folder-btn"
+                  data-target="contact"
+                  aria-label="Open contact folder"
+                >
+                  <span class="folder-icon" aria-hidden="true"></span>
+                  <span class="folder-label">Contact</span>
+                </button>
+              </div>
+
+              <p class="desktop-hint">Tap a folder to enter</p>
             </div>
 
             <div class="workspace" id="workspaceView" aria-hidden="true">
-              <aside class="sidebar" aria-label="Portfolio sections">
-                <div class="folder-title-wrap">
-                  <span class="folder-mini" aria-hidden="true"></span>
-                  <p>Portfolio Folder</p>
+              <section class="content-area">
+                <div class="workspace-topbar">
+                  <p id="sectionTitle">About Folder</p>
+                  <button class="back-btn" id="backToDesktopBtn">⬅ Back to desktop</button>
                 </div>
 
-                <button class="menu-btn active" data-target="about">About</button>
-                <button class="menu-btn" data-target="projects">Projects</button>
-                <button class="menu-btn" data-target="contact">Contact</button>
-
-                <button class="back-btn" id="backToDesktopBtn">⬅ Back to desktop</button>
-              </aside>
-
-              <section class="content-area">
-                <article class="panel active" id="about">
+                <article class="panel" id="about">
                   <h1>About Me</h1>
                   <p>
                     Hi, I’m <strong>Your Name</strong> — a creator who enjoys building delightful,

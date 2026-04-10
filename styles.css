@@ -102,6 +102,7 @@ body {
    place-items: center;
    align-content: center;
    gap: 1.2rem;
+   padding: 4.2rem 1rem 1.2rem;
 }
 
 .desktop::before {
@@ -153,6 +154,14 @@ body {
    transform: scale(1.06);
 }
 
+.desktop-folders {
+   display: grid;
+   grid-template-columns: repeat(3, minmax(0, 1fr));
+   gap: 1.1rem;
+   width: min(92%, 720px);
+   justify-items: center;
+}
+
 .folder-icon {
    width: 118px;
    height: 82px;
@@ -186,7 +195,7 @@ body {
 
 .workspace {
    display: grid;
-   grid-template-columns: 250px 1fr;
+   grid-template-columns: 1fr;
    opacity: 0;
    pointer-events: none;
    transform: scale(1.07);
@@ -199,54 +208,22 @@ body {
    transform: scale(1);
 }
 
-.sidebar {
-   background: rgba(4, 10, 20, 0.7);
-   border-right: 1px solid rgba(255, 255, 255, 0.08);
-   padding: 1rem;
-   display: grid;
-   grid-template-rows: auto auto auto auto 1fr auto;
-   gap: 0.65rem;
-}
-
-.folder-title-wrap {
-   display: flex;
-   align-items: center;
-   gap: 0.55rem;
-   margin-bottom: 0.35rem;
-   color: #dce6ff;
-}
-
-.folder-mini {
-   width: 24px;
-   height: 18px;
-   border-radius: 0.2rem;
-   background: linear-gradient(170deg, #ffd769, #f6aa31);
-}
-
-.menu-btn,
 .back-btn {
    border: 1px solid transparent;
    background: rgba(255, 255, 255, 0.05);
    color: #dce6ff;
    border-radius: 0.5rem;
-   text-align: left;
+   text-align: center;
    padding: 0.72rem 0.82rem;
    font-size: 0.94rem;
    cursor: pointer;
    transition: all 0.2s ease;
 }
 
-.menu-btn:hover,
-.menu-btn:focus-visible,
 .back-btn:hover,
 .back-btn:focus-visible {
    border-color: rgba(123, 147, 255, 0.55);
    background: rgba(123, 147, 255, 0.18);
-}
-
-.menu-btn.active {
-   border-color: rgba(99, 230, 196, 0.7);
-   background: rgba(99, 230, 196, 0.19);
 }
 
 .content-area {
@@ -257,6 +234,21 @@ body {
       rgba(8, 15, 30, 0.78),
       rgba(12, 24, 44, 0.82)
    );
+}
+
+.workspace-topbar {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   gap: 0.8rem;
+   margin-bottom: 1rem;
+}
+
+.workspace-topbar p {
+   margin: 0;
+   color: #dce6ff;
+   font-weight: 600;
+   letter-spacing: 0.2px;
 }
 
 .panel {
@@ -399,21 +391,18 @@ a:hover {
       padding: 1rem;
    }
 
+   .desktop-folders {
+      grid-template-columns: 1fr;
+      width: min(90%, 260px);
+   }
+
    .workspace {
       grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: 1fr;
    }
 
-   .sidebar {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-template-rows: auto auto;
-   }
-
-   .folder-title-wrap {
-      grid-column: 1 / -1;
-   }
-
-   .back-btn {
-      grid-column: 1 / -1;
+   .workspace-topbar {
+      flex-direction: column;
+      align-items: flex-start;
    }
 }
