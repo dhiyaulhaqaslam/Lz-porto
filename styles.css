@@ -275,6 +275,109 @@ body {
    line-height: 1.55;
 }
 
+.skills-showcase {
+   margin-top: 1.3rem;
+}
+
+.skills-showcase h2 {
+   margin: 0 0 0.85rem;
+   font-size: 1.05rem;
+   color: #ecf2ff;
+}
+
+.skills-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+   gap: 0.75rem;
+}
+
+.skill-card {
+   display: flex;
+   align-items: center;
+   gap: 0.95rem;
+   padding: 0.8rem;
+   border-radius: 1rem;
+   background: linear-gradient(
+      130deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.02)
+   );
+   border: 1px solid rgba(255, 255, 255, 0.14);
+   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.skill-card h3 {
+   margin: 0;
+   font-size: 1rem;
+   color: #eaf1ff;
+}
+
+.skill-card p {
+   margin: 0.1rem 0 0;
+   color: #aebde0;
+   font-size: 0.92rem;
+   line-height: 1.25;
+}
+
+.skill-logo {
+   width: 56px;
+   height: 56px;
+   border-radius: 0.35rem;
+   display: grid;
+   place-items: center;
+   font-weight: 800;
+   font-size: 1.05rem;
+   background: #1d2435;
+   flex-shrink: 0;
+}
+
+.skill-logo.laravel {
+   color: #ff453a;
+}
+
+.skill-logo.react {
+   color: #66d9ff;
+   font-size: 1.4rem;
+}
+
+.skill-logo.vite {
+   color: #7d82ff;
+}
+
+.skill-logo.php {
+   color: #8f93d4;
+}
+
+.skill-logo.javascript {
+   background: #f5df1e;
+   color: #111;
+}
+
+.skill-logo.bootstrap {
+   color: #9d62ff;
+}
+
+.skill-logo.mysql {
+   color: #66b5ff;
+}
+
+.skill-logo.tailwind {
+   color: #65daff;
+}
+
+.skill-logo.next {
+   color: #d6dce9;
+}
+
+.skill-logo.mongodb {
+   color: #4ed45a;
+}
+
+.skill-logo.typescript {
+   background: #3f91ff;
+   color: #052039;
+}
+
 .project-grid {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -404,5 +507,9 @@ a:hover {
    .workspace-topbar {
       flex-direction: column;
       align-items: flex-start;
+   }
+
+   .skills-grid {
+      grid-template-columns: 1fr;
    }
 }
