@@ -1,6 +1,12 @@
 :root {
    --bg-1: #080b14;
    --bg-2: #131a2d;
+   --splash-duration: 6000ms;
+   --boot-duration: 2000ms;
+   --camera-approach-duration: calc(
+      var(--splash-duration) - var(--boot-duration)
+   );
+   --screen-entry-duration: 2400ms;
    --laptop-body: #2b2f3d;
    --laptop-edge: #151923;
    --screen-bezel: #0e121b;
@@ -23,20 +29,17 @@
 
 body {
    margin: 0;
+   position: relative;
    font-family: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
    color: var(--text);
    min-height: 100vh;
-   background: radial-gradient(
-         circle at 10% 15%,
-         rgba(123, 147, 255, 0.16),
-         transparent 35%
-      ),
-      radial-gradient(
-         circle at 90% 85%,
-         rgba(99, 230, 196, 0.12),
-         transparent 38%
-      ),
-      linear-gradient(160deg, var(--bg-1), var(--bg-2));
+   background: linear-gradient(
+      180deg,
+      #1a2230 0%,
+      #151c28 42%,
+      #0f141d 42%,
+      #080b12 100%
+   );
 }
 
 .boot-sequence {
@@ -44,15 +47,10 @@ body {
    inset: 0;
    display: grid;
    place-items: center;
-   background: radial-gradient(
-      circle at 50% 40%,
-      #050a15 0%,
-      #010308 68%,
-      #000 100%
-   );
+   background: #000;
    z-index: 5;
    opacity: 1;
-   transition: opacity 0.45s ease, visibility 0.45s ease;
+   transition: opacity 0.28s ease, visibility 0.28s ease;
 }
 
 .boot-sequence.hidden {
@@ -74,17 +72,21 @@ body {
       inset 0 0 0 1px rgba(255, 255, 255, 0.03);
    padding: 1.35rem 1.15rem 1.25rem;
    text-align: center;
-   transform: scale(0.97);
-   opacity: 0.5;
-   transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease;
+   transform: translateY(10px) scale(0.985);
+   opacity: 0;
+   visibility: hidden;
+   transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease,
+      visibility 0s linear 0.4s;
 }
 
 .boot-panel.on {
    transform: scale(1);
    opacity: 1;
+   visibility: visible;
    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.68),
       0 0 60px rgba(123, 147, 255, 0.16),
       inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+   transition-delay: 0s;
 }
 
 .power-led {
@@ -161,7 +163,7 @@ body {
    border-radius: inherit;
    background: linear-gradient(90deg, #7393ff, #63e6c4);
    box-shadow: 0 0 16px rgba(99, 230, 196, 0.4);
-   transition: width 1.45s cubic-bezier(0.3, 0.7, 0.2, 1);
+   transition: width 0.95s cubic-bezier(0.3, 0.7, 0.2, 1);
 }
 
 .boot-progress-bar.on {
@@ -184,6 +186,59 @@ body {
    place-items: center;
    padding: 2rem;
    overflow: hidden;
+   position: relative;
+   isolation: isolate;
+}
+
+.scene::before {
+   content: "";
+   position: absolute;
+   inset: 0;
+   background: radial-gradient(
+         circle at 50% 16%,
+         rgba(255, 227, 180, 0.16) 0%,
+         transparent 22%
+      ),
+      radial-gradient(
+         circle at 18% 28%,
+         rgba(114, 137, 196, 0.18) 0%,
+         transparent 28%
+      ),
+      linear-gradient(
+         180deg,
+         rgba(26, 34, 48, 0.96) 0%,
+         rgba(17, 23, 33, 0.98) 54%,
+         rgba(8, 11, 18, 1) 100%
+      );
+   z-index: 0;
+   pointer-events: none;
+}
+
+.scene::after {
+   content: "";
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(
+         112deg,
+         rgba(255, 233, 188, 0.09),
+         transparent 28%
+      ),
+      linear-gradient(
+         180deg,
+         transparent 0 58%,
+         rgba(0, 0, 0, 0.38) 58%,
+         rgba(0, 0, 0, 0.7) 100%
+      ),
+      repeating-linear-gradient(
+         108deg,
+         rgba(255, 255, 255, 0.025) 0 10px,
+         transparent 10px 44px
+      );
+   opacity: 0.68;
+   mix-blend-mode: screen;
+   filter: blur(0.4px);
+   z-index: 0;
+   pointer-events: none;
 }
 
 .setup-stage {
@@ -193,14 +248,16 @@ body {
    display: grid;
    place-items: center;
    transform-origin: center center;
-   will-change: transform, filter;
+   will-change: transform;
+   z-index: 1;
+   backface-visibility: hidden;
 }
 
 .setup-stage.zooming {
-   animation: setupZoomIn 2.15s cubic-bezier(0.2, 0.82, 0.2, 1) both;
+   animation: setupZoomIn var(--camera-approach-duration) linear both;
 }
 
-.setup-stage::before {
+/* .setup-stage::before {
    content: "";
    position: absolute;
    inset: 0;
@@ -230,7 +287,7 @@ body {
    transform: rotate(-14deg);
    transition: opacity 0.5s ease, transform 0.5s ease;
    pointer-events: none;
-}
+} */
 
 .setup-stage.intro-complete::before,
 .setup-stage.intro-complete::after {
@@ -247,13 +304,13 @@ body {
    border-radius: 50%;
    background: radial-gradient(
       ellipse at center,
-      rgba(235, 242, 255, 0.22) 0%,
-      rgba(176, 204, 255, 0.12) 30%,
-      rgba(70, 92, 140, 0.04) 58%,
+      rgba(255, 232, 196, 0.24) 0%,
+      rgba(224, 194, 148, 0.12) 30%,
+      rgba(118, 93, 66, 0.05) 58%,
       transparent 74%
    );
    filter: blur(1.5px);
-   transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+   transition: opacity 0.45s ease, transform 0.45s ease;
    pointer-events: none;
 }
 
@@ -267,15 +324,17 @@ body {
    border-radius: 22px;
    background: linear-gradient(
       180deg,
-      rgba(45, 55, 78, 0.32),
-      rgba(17, 22, 34, 0.84) 35%,
-      rgba(8, 11, 19, 0.95) 100%
+      rgba(86, 67, 53, 0.34),
+      rgba(38, 29, 23, 0.86) 35%,
+      rgba(15, 11, 9, 0.96) 100%
    );
-   border: 1px solid rgba(255, 255, 255, 0.06);
-   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 24px 48px rgba(0, 0, 0, 0.45);
-   transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+   border: 1px solid rgba(255, 236, 210, 0.06);
+   box-shadow: inset 0 1px 0 rgba(255, 245, 232, 0.06),
+      0 24px 48px rgba(0, 0, 0, 0.5);
+   transition: opacity 0.45s ease, transform 0.45s ease;
    pointer-events: none;
+   will-change: transform, opacity;
+   backface-visibility: hidden;
 }
 
 .setup-speaker,
@@ -286,15 +345,16 @@ body {
    display: block;
    pointer-events: none;
    user-select: none;
-   transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+   transition: opacity 0.45s ease, transform 0.45s ease;
+   will-change: transform, opacity;
+   backface-visibility: hidden;
 }
 
 .setup-stage.intro-complete .overhead-light,
 .setup-stage.intro-complete .setup-speaker,
 .setup-stage.intro-complete .setup-tower {
    opacity: 0;
-   transform: scale(0.97);
-   filter: blur(1px);
+   transform: scale(0.985);
 }
 
 .setup-speaker {
@@ -338,9 +398,11 @@ body {
 .laptop {
    width: min(92vw, 980px);
    perspective: 1800px;
-   animation: laptopIntro 0.9s ease-out both;
    position: relative;
    z-index: 3;
+   transform-origin: center center;
+   will-change: transform;
+   backface-visibility: hidden;
 }
 
 .lid {
@@ -349,6 +411,7 @@ body {
    margin: 0 auto -1px;
    background: linear-gradient(to bottom, #3c4257, #2a3042);
    border-radius: 0.9rem 0.9rem 0.3rem 0.3rem;
+   transition: opacity 0.45s ease;
 }
 
 .screen-wrap {
@@ -359,6 +422,26 @@ body {
    padding: 18px 18px 22px;
    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.55),
       inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+   transform-origin: center center;
+   transition: transform 0.6s ease;
+   will-change: transform;
+   backface-visibility: hidden;
+}
+
+.screen-wrap::after {
+   content: "";
+   position: absolute;
+   inset: 18px 18px 22px;
+   border-radius: 0.9rem;
+   background: radial-gradient(
+         circle at 50% 50%,
+         rgba(140, 162, 255, 0) 0%,
+         rgba(140, 162, 255, 0.08) 46%,
+         rgba(2, 6, 14, 0.34) 100%
+      ),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 28%);
+   opacity: 0;
+   pointer-events: none;
 }
 
 .camera-dot {
@@ -380,6 +463,43 @@ body {
    border: 2px solid var(--screen-bezel);
    background: var(--screen-bg);
    overflow: hidden;
+   transform-origin: center center;
+   transition: transform 0.6s ease;
+   will-change: transform;
+   backface-visibility: hidden;
+}
+
+.setup-stage.screen-entry::before {
+   animation: povVignettePulse var(--screen-entry-duration) ease-in-out both;
+}
+
+.setup-stage.screen-entry::after {
+   animation: roomTraceShift var(--screen-entry-duration) ease-in-out both;
+}
+
+.setup-stage.screen-entry .overhead-light {
+   animation: overheadLightSettle var(--screen-entry-duration) ease-in-out both;
+}
+
+.setup-stage.screen-entry .desk-plane,
+.setup-stage.screen-entry .keyboard-prop,
+.setup-stage.screen-entry .mouse-prop,
+.setup-stage.screen-entry .lid,
+.setup-stage.screen-entry .base,
+.setup-stage.screen-entry .camera-dot {
+   animation: hardwareSoftFocus var(--screen-entry-duration) ease-in-out both;
+}
+
+.setup-stage.screen-entry .screen-wrap {
+   animation: screenEntryFocus var(--screen-entry-duration) linear both;
+}
+
+.setup-stage.screen-entry .screen-wrap::after {
+   animation: screenEntryAura var(--screen-entry-duration) ease-in-out both;
+}
+
+.setup-stage.screen-entry .screen {
+   animation: screenBootFocus var(--screen-entry-duration) linear both;
 }
 
 .desktop,
@@ -958,6 +1078,7 @@ a:hover {
    border-radius: 0 0 18px 18px;
    background: linear-gradient(to bottom, #40485e, #242938);
    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.44);
+   transition: opacity 0.45s ease;
 }
 
 .screen.opening .desktop {
@@ -1023,16 +1144,123 @@ a:hover {
 
 @keyframes setupZoomIn {
    0% {
-      transform: scale(0.86);
-      filter: brightness(0.84) saturate(0.88);
+      transform: translate3d(0.4vw, 12vh, 0) scale(0.56);
+   }
+   12% {
+      transform: translate3d(0.32vw, 10.7vh, 0) scale(0.61);
+   }
+   24% {
+      transform: translate3d(0.22vw, 9vh, 0) scale(0.67);
+   }
+   36% {
+      transform: translate3d(0.14vw, 7.3vh, 0) scale(0.73);
+   }
+   48% {
+      transform: translate3d(0.06vw, 5.5vh, 0) scale(0.8);
    }
    60% {
-      transform: scale(0.96);
-      filter: brightness(0.95) saturate(0.94);
+      transform: translate3d(0.02vw, 3.8vh, 0) scale(0.87);
+   }
+   72% {
+      transform: translate3d(-0.02vw, 2.3vh, 0) scale(0.93);
+   }
+   84% {
+      transform: translate3d(-0.02vw, 1vh, 0) scale(0.975);
+   }
+   94% {
+      transform: translate3d(0, 0.28vh, 0) scale(0.992);
    }
    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+   }
+}
+
+@keyframes povVignettePulse {
+   0%,
+   100% {
+      opacity: 1;
+   }
+   62% {
+      opacity: 0.74;
+   }
+}
+
+@keyframes roomTraceShift {
+   0%,
+   100% {
+      opacity: 0.42;
+      transform: rotate(-14deg) scale(1);
+   }
+   60% {
+      opacity: 0.16;
+      transform: rotate(-10deg) scale(1.04);
+   }
+}
+
+@keyframes overheadLightSettle {
+   0%,
+   100% {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+   }
+   60% {
+      opacity: 0.56;
+      transform: translateX(-50%) scale(0.98);
+   }
+}
+
+@keyframes hardwareSoftFocus {
+   0%,
+   100% {
+      opacity: 1;
+   }
+   62% {
+      opacity: 0.92;
+   }
+}
+
+@keyframes screenEntryFocus {
+   0%,
+   100% {
       transform: scale(1);
-      filter: brightness(1) saturate(1);
+   }
+   38% {
+      transform: scale(1.012);
+   }
+   72% {
+      transform: scale(1.028);
+   }
+   88% {
+      transform: scale(1.04);
+   }
+}
+
+@keyframes screenEntryAura {
+   0%,
+   100% {
+      opacity: 0;
+   }
+   38% {
+      opacity: 0.12;
+   }
+   72% {
+      opacity: 0.4;
+   }
+}
+
+@keyframes screenBootFocus {
+   0%,
+   100% {
+      transform: scale(1);
+   }
+   42% {
+      transform: scale(1.008);
+   }
+   74% {
+      transform: scale(1.02);
+   }
+   90% {
+      transform: scale(1.028);
    }
 }
 

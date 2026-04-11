@@ -31,9 +31,15 @@ const projectImages = Array.from(document.querySelectorAll(".project-image"));
 
 const OPEN_ANIMATION_MS = 740;
 const CLOSE_ANIMATION_MS = 560;
-const SETUP_ZOOM_MS = 2150;
+const SPLASH_SCREEN_MS = 6000;
+const CAMERA_APPROACH_MS = 4000;
+const BOOT_ANIMATION_MS = SPLASH_SCREEN_MS - CAMERA_APPROACH_MS;
+const SCREEN_ENTRY_LEAD_MS = 320;
 
 function completeBootAnimation() {
+  setupStage?.classList.remove("screen-entry", "zooming");
+  setupStage?.classList.add("intro-complete");
+
   if (!bootSequence) return;
 
   bootSequence.classList.add("hidden");
@@ -59,25 +65,25 @@ function runBootAnimation() {
     powerLed?.classList.add("on");
     bootPanel?.classList.add("on");
     typingIcon?.classList.add("on");
-  }, 280);
+  }, 120);
 
   window.setTimeout(() => {
     bootStatus.textContent = "Booting system...";
     bootLogo?.classList.add("on");
-  }, 780);
+  }, 540);
 
   window.setTimeout(() => {
     bootStatus.textContent = "Loading portfolio...";
     bootProgressBar?.classList.add("on");
-  }, 1150);
+  }, 980);
 
   window.setTimeout(() => {
     bootStatus.textContent = "Welcome back.";
-  }, 2200);
+  }, 1580);
 
   window.setTimeout(() => {
     completeBootAnimation();
-  }, 2850);
+  }, BOOT_ANIMATION_MS);
 }
 
 function runSetupIntro() {
@@ -94,10 +100,12 @@ function runSetupIntro() {
   setupStage.classList.add("zooming");
 
   window.setTimeout(() => {
-    setupStage.classList.remove("zooming");
-    setupStage.classList.add("intro-complete");
+    setupStage.classList.add("screen-entry");
+  }, CAMERA_APPROACH_MS - SCREEN_ENTRY_LEAD_MS);
+
+  window.setTimeout(() => {
     runBootAnimation();
-  }, SETUP_ZOOM_MS);
+  }, CAMERA_APPROACH_MS);
 }
 
 function initializeProjectImageFallback() {
