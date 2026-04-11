@@ -12,8 +12,16 @@
   </head>
   <body>
     <main class="scene" aria-live="polite">
-      <section class="laptop" aria-label="Portfolio laptop interface">
-        <div class="lid"></div>
+      <div class="setup-stage" id="setupStage">
+        <div class="overhead-light" aria-hidden="true"></div>
+
+        <div class="desk-plane" aria-hidden="true">
+          <img class="keyboard-prop" src="assets/setup/keyboard.svg" alt="" aria-hidden="true" />
+          <img class="mouse-prop" src="assets/setup/mouse.svg" alt="" aria-hidden="true" />
+        </div>
+
+        <section class="laptop" aria-label="Portfolio laptop interface">
+          <div class="lid"></div>
 
         <div class="screen-wrap">
           <div class="camera-dot"></div>
@@ -423,8 +431,9 @@
           </div>
         </div>
 
-        <div class="base"></div>
-      </section>
+          <div class="base"></div>
+        </section>
+      </div>
     </main>
 
     <script src="script.js"></script>

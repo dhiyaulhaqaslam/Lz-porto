@@ -1,4 +1,5 @@
 const screen = document.getElementById("screen");
+const setupStage = document.getElementById("setupStage");
 const bootSequence = document.getElementById("bootSequence");
 const bootStatus = document.getElementById("bootStatus");
 const typingIcon = document.getElementById("typingIcon");
@@ -30,6 +31,7 @@ const projectImages = Array.from(document.querySelectorAll(".project-image"));
 
 const OPEN_ANIMATION_MS = 740;
 const CLOSE_ANIMATION_MS = 560;
+const SETUP_ZOOM_MS = 2150;
 
 function completeBootAnimation() {
   if (!bootSequence) return;
@@ -76,6 +78,26 @@ function runBootAnimation() {
   window.setTimeout(() => {
     completeBootAnimation();
   }, 2850);
+}
+
+function runSetupIntro() {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (!setupStage || prefersReducedMotion) {
+    setupStage?.classList.add("intro-complete");
+    runBootAnimation();
+    return;
+  }
+
+  setupStage.classList.add("zooming");
+
+  window.setTimeout(() => {
+    setupStage.classList.remove("zooming");
+    setupStage.classList.add("intro-complete");
+    runBootAnimation();
+  }, SETUP_ZOOM_MS);
 }
 
 function initializeProjectImageFallback() {
@@ -225,4 +247,4 @@ setPanel("about");
 setAboutTab("tools");
 resetProjectExplorer();
 initializeProjectImageFallback();
-runBootAnimation();
+runSetupIntro();

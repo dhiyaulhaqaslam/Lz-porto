@@ -1,0 +1,27 @@
+<svg width="110" height="180" viewBox="0 0 110 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="speakerBody" x1="12" y1="8" x2="95" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#161D30"/>
+      <stop offset="1" stop-color="#070B15"/>
+    </linearGradient>
+    <radialGradient id="ring1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(55 58) rotate(90) scale(25)">
+      <stop stop-color="#C8D3FF"/>
+      <stop offset="0.48" stop-color="#7B93FF"/>
+      <stop offset="1" stop-color="#2D355C"/>
+    </radialGradient>
+    <radialGradient id="ring2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(55 118) rotate(90) scale(25)">
+      <stop stop-color="#CBFFF4"/>
+      <stop offset="0.45" stop-color="#63E6C4"/>
+      <stop offset="1" stop-color="#224A44"/>
+    </radialGradient>
+  </defs>
+  <rect x="10" y="6" width="90" height="168" rx="14" fill="url(#speakerBody)" stroke="#2D3858" stroke-width="1.2"/>
+  <rect x="18" y="14" width="74" height="152" rx="10" fill="#0A1020"/>
+  <circle cx="55" cy="58" r="24" fill="#0B1222" stroke="#243150"/>
+  <circle cx="55" cy="58" r="19" fill="url(#ring1)"/>
+  <circle cx="55" cy="58" r="7" fill="#070C18"/>
+  <circle cx="55" cy="118" r="24" fill="#0B1222" stroke="#243150"/>
+  <circle cx="55" cy="118" r="19" fill="url(#ring2)"/>
+  <circle cx="55" cy="118" r="7" fill="#070C18"/>
+  <rect x="49" y="149" width="12" height="4" rx="2" fill="#55CDB4"/>
+</svg>
