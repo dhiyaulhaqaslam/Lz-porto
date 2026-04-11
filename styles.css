@@ -39,6 +39,145 @@ body {
       linear-gradient(160deg, var(--bg-1), var(--bg-2));
 }
 
+.boot-sequence {
+   position: absolute;
+   inset: 0;
+   display: grid;
+   place-items: center;
+   background: radial-gradient(
+      circle at 50% 40%,
+      #050a15 0%,
+      #010308 68%,
+      #000 100%
+   );
+   z-index: 5;
+   opacity: 1;
+   transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+.boot-sequence.hidden {
+   opacity: 0;
+   visibility: hidden;
+   pointer-events: none;
+}
+
+.boot-panel {
+   width: min(84%, 440px);
+   border-radius: 1rem;
+   border: 1px solid rgba(124, 141, 177, 0.2);
+   background: linear-gradient(
+      160deg,
+      rgba(8, 14, 29, 0.9),
+      rgba(3, 7, 16, 0.95)
+   );
+   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+   padding: 1.35rem 1.15rem 1.25rem;
+   text-align: center;
+   transform: scale(0.97);
+   opacity: 0.5;
+   transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease;
+}
+
+.boot-panel.on {
+   transform: scale(1);
+   opacity: 1;
+   box-shadow: 0 40px 90px rgba(0, 0, 0, 0.68),
+      0 0 60px rgba(123, 147, 255, 0.16),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.power-led {
+   width: 10px;
+   height: 10px;
+   border-radius: 50%;
+   display: block;
+   margin: 0 auto 0.85rem;
+   background: #1d2230;
+   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+   transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+.power-led.on {
+   background: #6fe6c8;
+   box-shadow: 0 0 12px rgba(111, 230, 200, 0.75),
+      0 0 22px rgba(111, 230, 200, 0.35);
+}
+
+.boot-status {
+   margin: 0;
+   color: #97a7c7;
+   font-size: 0.88rem;
+   letter-spacing: 0.2px;
+   min-height: 1.2rem;
+}
+
+.typing-icon {
+   display: block;
+   margin: 0.35rem auto 0.15rem;
+   font-size: 1rem;
+   line-height: 1;
+   opacity: 0;
+   transform: translateY(3px) scale(0.94);
+   filter: grayscale(0.2) brightness(0.96);
+   transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.typing-icon.on {
+   opacity: 0.92;
+   transform: translateY(0) scale(1);
+   animation: typingPulse 0.78s ease-in-out infinite;
+}
+
+.boot-logo {
+   margin: 0.65rem 0 0.95rem;
+   font-size: clamp(1.2rem, 2.3vw, 1.55rem);
+   letter-spacing: 0.28rem;
+   font-weight: 700;
+   color: #d3dcf6;
+   opacity: 0;
+   transform: translateY(6px);
+   transition: opacity 0.45s ease, transform 0.45s ease, text-shadow 0.45s ease;
+}
+
+.boot-logo.on {
+   opacity: 1;
+   transform: translateY(0);
+   text-shadow: 0 0 18px rgba(123, 147, 255, 0.45);
+}
+
+.boot-progress {
+   width: 100%;
+   height: 7px;
+   border-radius: 999px;
+   background: rgba(220, 230, 255, 0.12);
+   overflow: hidden;
+}
+
+.boot-progress-bar {
+   display: block;
+   width: 0%;
+   height: 100%;
+   border-radius: inherit;
+   background: linear-gradient(90deg, #7393ff, #63e6c4);
+   box-shadow: 0 0 16px rgba(99, 230, 196, 0.4);
+   transition: width 1.45s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+
+.boot-progress-bar.on {
+   width: 100%;
+}
+
+.screen.booting .desktop,
+.screen.booting .workspace {
+   visibility: hidden;
+}
+
+.screen.booted .desktop,
+.screen.booted .workspace {
+   visibility: visible;
+}
+
 .scene {
    min-height: 100vh;
    display: grid;
@@ -730,6 +869,18 @@ a:hover {
    }
 }
 
+@keyframes typingPulse {
+   0%,
+   100% {
+      transform: translateY(0) scale(1);
+      filter: grayscale(0.2) brightness(0.96);
+   }
+   45% {
+      transform: translateY(-1.5px) scale(1.06);
+      filter: grayscale(0) brightness(1.04);
+   }
+}
+
 @media (max-width: 800px) {
    .scene {
       padding: 1rem;
@@ -764,5 +915,19 @@ a:hover {
 
    .project-card-detail img {
       height: 150px;
+   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .boot-panel,
+   .boot-logo,
+   .typing-icon,
+   .boot-progress-bar,
+   .boot-sequence {
+      transition: none;
+   }
+
+   .typing-icon.on {
+      animation: none;
    }
 }

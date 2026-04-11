@@ -1,4 +1,11 @@
 const screen = document.getElementById("screen");
+const bootSequence = document.getElementById("bootSequence");
+const bootStatus = document.getElementById("bootStatus");
+const typingIcon = document.getElementById("typingIcon");
+const bootLogo = document.getElementById("bootLogo");
+const bootProgressBar = document.getElementById("bootProgressBar");
+const powerLed = document.getElementById("powerLed");
+const bootPanel = bootSequence?.querySelector(".boot-panel");
 const desktopView = document.getElementById("desktopView");
 const workspaceView = document.getElementById("workspaceView");
 const desktopFolderButtons = Array.from(
@@ -23,6 +30,53 @@ const projectImages = Array.from(document.querySelectorAll(".project-image"));
 
 const OPEN_ANIMATION_MS = 740;
 const CLOSE_ANIMATION_MS = 560;
+
+function completeBootAnimation() {
+  if (!bootSequence) return;
+
+  bootSequence.classList.add("hidden");
+  screen?.classList.remove("booting");
+  screen?.classList.add("booted");
+}
+
+function runBootAnimation() {
+  if (!bootSequence) return;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (prefersReducedMotion) {
+    bootStatus.textContent = "Ready";
+    completeBootAnimation();
+    return;
+  }
+
+  window.setTimeout(() => {
+    bootStatus.textContent = "Powering on...";
+    powerLed?.classList.add("on");
+    bootPanel?.classList.add("on");
+    typingIcon?.classList.add("on");
+  }, 280);
+
+  window.setTimeout(() => {
+    bootStatus.textContent = "Booting system...";
+    bootLogo?.classList.add("on");
+  }, 780);
+
+  window.setTimeout(() => {
+    bootStatus.textContent = "Loading portfolio...";
+    bootProgressBar?.classList.add("on");
+  }, 1150);
+
+  window.setTimeout(() => {
+    bootStatus.textContent = "Welcome back.";
+  }, 2200);
+
+  window.setTimeout(() => {
+    completeBootAnimation();
+  }, 2850);
+}
 
 function initializeProjectImageFallback() {
   projectImages.forEach((image) => {
@@ -171,3 +225,4 @@ setPanel("about");
 setAboutTab("tools");
 resetProjectExplorer();
 initializeProjectImageFallback();
+runBootAnimation();
