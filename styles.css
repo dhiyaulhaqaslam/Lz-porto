@@ -382,10 +382,11 @@ body {
 
 .keyboard-prop {
    left: 50%;
-   top: 30%;
-   width: clamp(250px, 36vw, 420px);
+   top: 28%;
+   width: clamp(300px, 38vw, 520px);
    transform: translateX(-53%);
    filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.35));
+   isolation: isolate;
 }
 
 .mouse-prop {
@@ -500,6 +501,175 @@ body {
 
 .setup-stage.screen-entry .screen {
    animation: screenBootFocus var(--screen-entry-duration) linear both;
+}
+
+.keyboard-shell {
+   position: relative;
+   padding: clamp(0.48rem, 1vw, 0.82rem);
+   border-radius: 1rem;
+   background: linear-gradient(145deg, #334462, #151e32);
+   border: 1px solid rgba(96, 118, 168, 0.72);
+   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(8, 11, 19, 0.72),
+      0 12px 26px rgba(0, 0, 0, 0.34);
+   overflow: hidden;
+}
+
+.keyboard-shell::before {
+   content: "";
+   position: absolute;
+   inset: clamp(0.42rem, 0.85vw, 0.7rem);
+   border-radius: 0.82rem;
+   background: linear-gradient(180deg, #0d1526 0%, #11192d 100%);
+   box-shadow: inset 0 0 0 1px rgba(74, 95, 135, 0.48);
+   z-index: 0;
+}
+
+.keyboard-shell::after {
+   content: "";
+   position: absolute;
+   inset: 0;
+   background: radial-gradient(
+         circle at 18% 14%,
+         rgba(255, 255, 255, 0.12),
+         transparent 22%
+      ),
+      radial-gradient(
+         circle at 50% 50%,
+         rgba(123, 147, 255, 0.18),
+         transparent 58%
+      );
+   opacity: 0.36;
+   transform: scale(1);
+   transition: opacity 0.18s ease, transform 0.18s ease;
+   z-index: 0;
+}
+
+.keyboard-prop.is-typing .keyboard-shell::after {
+   opacity: 0.82;
+   transform: scale(1.03);
+}
+
+.keyboard-visual {
+   position: relative;
+   z-index: 1;
+   display: grid;
+   gap: 0.18rem;
+}
+
+.keyboard-row {
+   display: flex;
+   gap: 0.18rem;
+}
+
+.keyboard-key {
+   --flash-rgb: 123, 147, 255;
+   position: relative;
+   flex: 1 1 0;
+   min-width: 0;
+   height: clamp(0.78rem, 1.5vw, 1.18rem);
+   border-radius: 0.32rem;
+   border: 1px solid rgba(46, 61, 97, 0.95);
+   background: linear-gradient(
+      180deg,
+      rgba(18, 28, 48, 0.98),
+      rgba(10, 16, 29, 0.97)
+   );
+   box-shadow: inset 0 1px 0 rgba(157, 183, 255, 0.08),
+      inset 0 -1px 0 rgba(3, 7, 14, 0.84);
+   color: rgba(176, 195, 255, 0.84);
+   display: grid;
+   place-items: center;
+   overflow: hidden;
+   white-space: nowrap;
+   font-size: clamp(0.3rem, 0.54vw, 0.5rem);
+   font-weight: 600;
+   line-height: 1;
+   letter-spacing: 0.05em;
+   text-transform: uppercase;
+   text-shadow: 0 0 6px rgba(4, 7, 13, 0.56);
+   transition: transform 0.08s ease, border-color 0.15s ease,
+      background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.keyboard-key::before {
+   content: "";
+   position: absolute;
+   inset: 1px 2px auto;
+   height: 28%;
+   border-radius: inherit;
+   background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0)
+   );
+   pointer-events: none;
+}
+
+.keyboard-key::after {
+   content: "";
+   position: absolute;
+   inset: -22%;
+   background: radial-gradient(
+      circle,
+      rgba(var(--flash-rgb), 0.68) 0%,
+      rgba(var(--flash-rgb), 0.2) 42%,
+      transparent 74%
+   );
+   opacity: 0;
+   transform: scale(0.56);
+   pointer-events: none;
+}
+
+.keyboard-key[data-width="mod"] {
+   flex: 1.22 1 0;
+}
+
+.keyboard-key[data-width="wide"] {
+   flex: 1.45 1 0;
+}
+
+.keyboard-key[data-width="caps"] {
+   flex: 1.72 1 0;
+}
+
+.keyboard-key[data-width="enter"] {
+   flex: 1.9 1 0;
+}
+
+.keyboard-key[data-width="shift"] {
+   flex: 1.96 1 0;
+}
+
+.keyboard-key[data-width="backspace"] {
+   flex: 1.9 1 0;
+}
+
+.keyboard-key[data-width="space"] {
+   flex: 5.4 1 0;
+   letter-spacing: 0.08em;
+}
+
+.keyboard-key.is-active {
+   transform: translateY(1px) scale(0.98);
+   border-color: rgba(var(--flash-rgb), 0.92);
+   background: linear-gradient(
+      180deg,
+      rgba(var(--flash-rgb), 0.34),
+      rgba(10, 16, 29, 0.96)
+   );
+   color: #f8fbff;
+   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.13),
+      0 0 14px rgba(var(--flash-rgb), 0.3),
+      0 0 24px rgba(var(--flash-rgb), 0.14);
+}
+
+.keyboard-key.is-flashing {
+   animation: keycapPressPulse 0.38s ease-out 1;
+}
+
+.keyboard-key.is-flashing::after {
+   animation: keyFlashBurst 0.38s ease-out 1;
 }
 
 .desktop,
@@ -1264,6 +1434,33 @@ a:hover {
    }
 }
 
+@keyframes keyFlashBurst {
+   0% {
+      opacity: 0;
+      transform: scale(0.56);
+   }
+   22% {
+      opacity: 1;
+      transform: scale(1);
+   }
+   100% {
+      opacity: 0;
+      transform: scale(1.55);
+   }
+}
+
+@keyframes keycapPressPulse {
+   0% {
+      transform: translateY(0) scale(1);
+   }
+   18% {
+      transform: translateY(1px) scale(0.975);
+   }
+   100% {
+      transform: translateY(1px) scale(0.98);
+   }
+}
+
 @keyframes typingPulse {
    0%,
    100% {
@@ -1310,8 +1507,22 @@ a:hover {
    }
 
    .keyboard-prop {
-      width: min(64vw, 320px);
+      width: min(72vw, 360px);
       top: 34%;
+   }
+
+   .keyboard-shell {
+      padding: 0.42rem;
+   }
+
+   .keyboard-visual,
+   .keyboard-row {
+      gap: 0.12rem;
+   }
+
+   .keyboard-key {
+      height: 0.72rem;
+      font-size: 0.28rem;
    }
 
    .mouse-prop {
@@ -1362,11 +1573,19 @@ a:hover {
    .boot-logo,
    .typing-icon,
    .boot-progress-bar,
-   .boot-sequence {
+   .boot-sequence,
+   .keyboard-shell::after,
+   .keyboard-key,
+   .keyboard-key::after {
       transition: none;
    }
 
    .typing-icon.on {
+      animation: none;
+   }
+
+   .keyboard-key.is-flashing,
+   .keyboard-key.is-flashing::after {
       animation: none;
    }
 }
