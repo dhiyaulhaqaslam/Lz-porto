@@ -43,6 +43,37 @@
               </div>
             </div>
 
+            <div
+              class="lock-screen"
+              id="lockScreen"
+              role="dialog"
+              aria-modal="true"
+              aria-hidden="true"
+              aria-labelledby="lockTitle"
+            >
+              <div class="lock-panel">
+                <p class="lock-eyebrow" style="text-align: center;">Secure Login</p>
+
+                <form class="lock-form" id="lockForm" novalidate>
+                  <label class="sr-only" for="passwordInput">Portfolio password</label>
+                  <input
+                    class="lock-input"
+                    id="passwordInput"
+                    name="password"
+                    type="password"
+                    inputmode="text"
+                    autocomplete="current-password"
+                    spellcheck="false"
+                    placeholder="Password"
+                    aria-describedby="passwordHint passwordMessage"
+                  />
+                  <button class="lock-submit" type="submit">Unlock</button>
+                </form>
+
+                <p class="lock-message" id="passwordMessage" role="status" aria-live="polite"></p>
+              </div>
+            </div>
+
             <div class="desktop" id="desktopView">
               <header class="desktop-topbar">
                 <p>My Portfolio OS</p>

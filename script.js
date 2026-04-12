@@ -7,6 +7,10 @@ const bootLogo = document.getElementById("bootLogo");
 const bootProgressBar = document.getElementById("bootProgressBar");
 const powerLed = document.getElementById("powerLed");
 const bootPanel = bootSequence?.querySelector(".boot-panel");
+const lockScreen = document.getElementById("lockScreen");
+const lockForm = document.getElementById("lockForm");
+const passwordInput = document.getElementById("passwordInput");
+const passwordMessage = document.getElementById("passwordMessage");
 const desktopView = document.getElementById("desktopView");
 const workspaceView = document.getElementById("workspaceView");
 const desktopFolderButtons = Array.from(
@@ -33,12 +37,15 @@ const projectImages = Array.from(document.querySelectorAll(".project-image"));
 
 const OPEN_ANIMATION_MS = 740;
 const CLOSE_ANIMATION_MS = 560;
-const SPLASH_SCREEN_MS = 6000;
+const SPLASH_SCREEN_MS = 5500;
 const CAMERA_APPROACH_MS = 4000;
 const BOOT_ANIMATION_MS = SPLASH_SCREEN_MS - CAMERA_APPROACH_MS;
 const SCREEN_ENTRY_LEAD_MS = 320;
 const KEYBOARD_FLASH_MS = 380;
 const KEYBOARD_AURA_MS = 180;
+const PORTFOLIO_PASSWORD = "elzeyporto";
+const UNLOCK_TRANSITION_MS = 360;
+const PASSWORD_FOCUS_DELAY_MS = 90;
 
 const KEYBOARD_LAYOUT = [
   [
@@ -128,6 +135,98 @@ const activeKeyboardElements = new Map();
 const keyboardFlashTimers = new Map();
 
 let keyboardAuraTimer = 0;
+let isPortfolioUnlocked = false;
+
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function setLockMessage(message = "", state = "") {
+  if (!passwordMessage) return;
+
+  passwordMessage.textContent = message;
+
+  if (state) {
+    passwordMessage.dataset.state = state;
+    return;
+  }
+
+  delete passwordMessage.dataset.state;
+}
+
+function focusPasswordField(delay = 0) {
+  if (!passwordInput) return;
+
+  window.setTimeout(() => {
+    passwordInput.focus({ preventScroll: true });
+  }, delay);
+}
+
+function showLockScreen() {
+  if (!screen || !lockScreen || isPortfolioUnlocked) return;
+
+  screen.classList.add("locked");
+  screen.classList.remove("unlocked");
+  lockScreen.classList.add("active");
+  lockScreen.classList.remove("unlocking", "shake");
+  lockScreen.setAttribute("aria-hidden", "false");
+  desktopView?.setAttribute("aria-hidden", "true");
+
+  if (passwordInput) {
+    passwordInput.value = "";
+  }
+
+  setLockMessage("");
+  focusPasswordField(PASSWORD_FOCUS_DELAY_MS);
+}
+
+function unlockPortfolio() {
+  if (!screen || !lockScreen || isPortfolioUnlocked) return;
+
+  isPortfolioUnlocked = true;
+  setLockMessage("Access granted.", "success");
+  lockScreen.classList.remove("shake");
+  lockScreen.classList.add("unlocking");
+  passwordInput?.blur();
+
+  const unlockDelay = prefersReducedMotion() ? 0 : UNLOCK_TRANSITION_MS;
+
+  window.setTimeout(() => {
+    screen.classList.remove("locked");
+    screen.classList.add("unlocked");
+    lockScreen.classList.remove("active", "unlocking");
+    lockScreen.setAttribute("aria-hidden", "true");
+    desktopView?.setAttribute("aria-hidden", "false");
+
+    if (passwordInput) {
+      passwordInput.value = "";
+    }
+
+    setLockMessage("");
+  }, unlockDelay);
+}
+
+function handleUnlockSubmit(event) {
+  event.preventDefault();
+
+  if (!passwordInput) return;
+
+  if (passwordInput.value === PORTFOLIO_PASSWORD) {
+    unlockPortfolio();
+    return;
+  }
+
+  setLockMessage("Incorrect password. Try again.", "error");
+  passwordInput.value = "";
+
+  if (lockScreen) {
+    lockScreen.classList.remove("shake");
+    void lockScreen.offsetWidth;
+    lockScreen.classList.add("shake");
+  }
+
+  focusPasswordField(40);
+}
 
 function buildKeyboardVisualizer() {
   if (!keyboardVisual) return;
@@ -294,21 +393,16 @@ function completeBootAnimation() {
   setupStage?.classList.remove("screen-entry", "zooming");
   setupStage?.classList.add("intro-complete");
 
-  if (!bootSequence) return;
-
-  bootSequence.classList.add("hidden");
+  bootSequence?.classList.add("hidden");
   screen?.classList.remove("booting");
   screen?.classList.add("booted");
+  showLockScreen();
 }
 
 function runBootAnimation() {
   if (!bootSequence) return;
 
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-  if (prefersReducedMotion) {
+  if (prefersReducedMotion()) {
     bootStatus.textContent = "Ready";
     completeBootAnimation();
     return;
@@ -341,11 +435,7 @@ function runBootAnimation() {
 }
 
 function runSetupIntro() {
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-  if (!setupStage || prefersReducedMotion) {
+  if (!setupStage || prefersReducedMotion()) {
     setupStage?.classList.add("intro-complete");
     runBootAnimation();
     return;
@@ -451,6 +541,7 @@ function setPanel(targetId) {
 }
 
 function openFolder(targetId) {
+  if (screen?.classList.contains("locked")) return;
   if (workspaceView.classList.contains("active")) return;
 
   setPanel(targetId);
@@ -496,6 +587,25 @@ projectFolderButtons.forEach((button) => {
 if (backToProjectFoldersBtn) {
   backToProjectFoldersBtn.addEventListener("click", resetProjectExplorer);
 }
+
+lockForm?.addEventListener("submit", handleUnlockSubmit);
+
+lockScreen?.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLElement)) return;
+  if (target.closest(".lock-submit")) return;
+
+  focusPasswordField();
+});
+
+passwordInput?.addEventListener("input", () => {
+  if (passwordMessage?.dataset.state === "error") {
+    setLockMessage("");
+  }
+
+  lockScreen?.classList.remove("shake");
+});
 
 window.addEventListener("keydown", (event) => {
   handleKeyboardVisualizerKeyDown(event);
